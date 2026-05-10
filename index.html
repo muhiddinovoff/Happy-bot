@@ -14,8 +14,10 @@
       href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
-    <link rel="preload" href="video1.mp4" as="video" type="video/mp4" />
-    <link rel="preload" href="video2.mp4" as="video" type="video/mp4" />
+    <link rel="preload" href="video1-web.mp4" as="video" type="video/mp4" />
+    <link rel="preload" href="video2-web.mp4" as="video" type="video/mp4" />
+    <link rel="preload" href="video1-poster.jpg" as="image" />
+    <link rel="preload" href="video2-poster.jpg" as="image" />
     <link rel="preload" href="music.mp3" as="audio" type="audio/mpeg" />
     <link rel="preload" href="ticket-bg.jpg" as="image" />
     <link rel="stylesheet" href="styles.css" />
@@ -30,7 +32,7 @@
 
     <div class="audio-badge" id="audioBadge">
       <span class="audio-badge__dot"></span>
-      <span class="audio-badge__text">Yolg'izim senga... пусть эта музыка останется рядом с этим вечером.</span>
+      <span class="audio-badge__text">Yolg'izim senga... пусть эта music останется рядом с этим вечером.</span>
     </div>
 
     <div class="film-grain" aria-hidden="true"></div>
@@ -86,13 +88,16 @@
             <video
               class="scene-video"
               id="cinemaOne"
-              src="video1.mp4"
               autoplay
               loop
               playsinline
+              webkit-playsinline="true"
               muted
-              preload="auto"
-            ></video>
+              poster="video1-poster.jpg"
+              preload="metadata"
+            >
+              <source src="video1-web.mp4" type="video/mp4" />
+            </video>
             <div class="video-stage__overlay video-stage__overlay--warm"></div>
             <div class="video-stage__overlay video-stage__overlay--shade"></div>
           </div>
@@ -130,13 +135,16 @@
             <video
               class="scene-video scene-video--zoom"
               id="cinemaTwo"
-              src="video2.mp4"
               autoplay
               loop
               playsinline
+              webkit-playsinline="true"
               muted
-              preload="auto"
-            ></video>
+              poster="video2-poster.jpg"
+              preload="metadata"
+            >
+              <source src="video2-web.mp4" type="video/mp4" />
+            </video>
             <div class="video-stage__overlay video-stage__overlay--rose"></div>
             <div class="video-stage__overlay video-stage__overlay--shade"></div>
             <div class="video-stage__flare"></div>
@@ -174,7 +182,7 @@
       <section class="scene gallery-scene" id="memoryGallery">
         <div class="scene-sticky gallery-stage">
           <div class="gallery-copy">
-            <p class="eyebrow eyebrow--soft">Поэтому</p>
+            <p class="eyebrow eyebrow--soft">По поэтому</p>
             <h2 class="section-title">мне захотелось подарить тебе не вещь, а настроение.</h2>
             <p class="gallery-caption" id="galleryCaption">
               Тихое, тёплое и настоящее. Такое, к которому хочется возвращаться снова и снова.
@@ -277,6 +285,6 @@
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
     <script src="https://unpkg.com/lenis@1.1.16/dist/lenis.min.js"></script>
-    <script src="script.js"></script>
+    <script src="main.js"></script>
   </body>
 </html>

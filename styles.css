@@ -700,7 +700,7 @@ main {
   background:
     linear-gradient(180deg, rgba(8, 4, 6, 0.14), rgba(5, 3, 4, 0.72)),
     url("ticket-bg.jpg") center 4% / cover no-repeat;
-  transform: translate3d(0, 0, 0) scale(1.18);
+  transform: translate3d(0, 0, 0) scale(1.12);
   filter: saturate(1.04) brightness(0.76);
   will-change: transform;
 }
@@ -1055,8 +1055,8 @@ main {
   }
 
   .finale-stage__backdrop {
-    background-position: center 2%;
-    transform: translate3d(0, 0, 0) scale(1.42);
+    background-position: center 1%;
+    transform: translate3d(0, 0, 0) scale(1.16);
   }
 }
 
