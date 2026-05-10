@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Для тебя</title>
+    <meta
+      name="description"
+      content="Кинематографичное романтичное письмо с видео, музыкой и постером."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preload" href="video1.mp4" as="video" type="video/mp4" />
+    <link rel="preload" href="video2.mp4" as="video" type="video/mp4" />
+    <link rel="preload" href="music.mp3" as="audio" type="audio/mpeg" />
+    <link rel="preload" href="ticket-bg.jpg" as="image" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="page-loader" id="pageLoader" aria-hidden="true">
+      <div class="page-loader__inner">
+        <span class="page-loader__label">Одно мгновение...</span>
+        <span class="page-loader__line"></span>
+      </div>
+    </div>
+
+    <div class="audio-badge" id="audioBadge">
+      <span class="audio-badge__dot"></span>
+      <span class="audio-badge__text">Yolg'izim senga... пусть звучит рядом с этим вечером.</span>
+    </div>
+
+    <div class="film-grain" aria-hidden="true"></div>
+    <div class="vignette" aria-hidden="true"></div>
+    <div class="ambient-lights" aria-hidden="true">
+      <span class="ambient-lights__beam ambient-lights__beam--left"></span>
+      <span class="ambient-lights__beam ambient-lights__beam--right"></span>
+      <span class="ambient-lights__orb ambient-lights__orb--top"></span>
+      <span class="ambient-lights__orb ambient-lights__orb--bottom"></span>
+    </div>
+    <div class="scene-transition" id="sceneTransition" aria-hidden="true">
+      <span class="scene-transition__veil"></span>
+      <span class="scene-transition__core"></span>
+      <span class="scene-transition__ring"></span>
+      <span class="scene-transition__streak scene-transition__streak--left"></span>
+      <span class="scene-transition__streak scene-transition__streak--right"></span>
+    </div>
+    <canvas class="dust-canvas" id="dustCanvas" aria-hidden="true"></canvas>
+
+    <audio id="soundtrack" src="music.mp3" preload="auto" loop></audio>
+
+    <main id="smoothContent">
+      <section class="scene intro-scene" id="intro">
+        <div class="scene-sticky intro-stage">
+          <div class="intro-stage__light intro-stage__light--a"></div>
+          <div class="intro-stage__light intro-stage__light--b"></div>
+          <div class="intro-stage__light intro-stage__light--c"></div>
+
+          <div class="intro-copy">
+            <p class="eyebrow" data-appear>Я долго думал, чем тебя порадовать.</p>
+            <h1 class="hero-title">
+              <span class="hero-title__line" data-split>Я много думал</span>
+              <span class="hero-title__line" data-split>и пытался придумать</span>
+              <span class="hero-title__line" data-split>что-то по-настоящему</span>
+              <span class="hero-title__line" data-split>замечательное и трогательное.</span>
+            </h1>
+            <p class="hero-lead" data-appear>
+              Не просто подарок, а чувство, в котором останутся мои мысли,
+              волнение и всё самое тёплое по отношению к тебе.
+            </p>
+          </div>
+
+          <div class="scroll-whisper" data-appear>
+            <span class="scroll-whisper__line"></span>
+            <span class="scroll-whisper__text">Листай дальше</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="scene video-scene" id="videoSceneOne" data-video-scene>
+        <div class="scene-sticky video-stage">
+          <div class="video-stage__media">
+            <video
+              class="scene-video"
+              id="cinemaOne"
+              src="video1.mp4"
+              playsinline
+              muted
+              preload="auto"
+            ></video>
+            <div class="video-stage__overlay video-stage__overlay--warm"></div>
+            <div class="video-stage__overlay video-stage__overlay--shade"></div>
+          </div>
+
+          <div class="story-block story-block--left">
+            <p class="story-line" data-start="0.04" data-end="0.3">
+              Честно говоря, я долго не знал,
+              что именно тебе подарить.
+            </p>
+            <p class="story-line" data-start="0.26" data-end="0.52">
+              Мне хотелось выбрать
+              не что-то случайное,
+              а что-то настоящее.
+            </p>
+            <p class="story-line" data-start="0.48" data-end="0.74">
+              Что-то нежное,
+              красивое и запоминающееся,
+              как этот взгляд.
+            </p>
+            <p class="story-line" data-start="0.7" data-end="0.96">
+              И всё это время рядом тихо звучало:
+              Yolg'izim senga...
+            </p>
+          </div>
+
+          <div class="story-kicker">
+            <span>Наверное, с этого всё и началось</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="scene video-scene video-scene--climax" id="videoSceneTwo" data-video-scene>
+        <div class="scene-sticky video-stage">
+          <div class="video-stage__media">
+            <video
+              class="scene-video scene-video--zoom"
+              id="cinemaTwo"
+              src="video2.mp4"
+              playsinline
+              muted
+              preload="auto"
+            ></video>
+            <div class="video-stage__overlay video-stage__overlay--rose"></div>
+            <div class="video-stage__overlay video-stage__overlay--shade"></div>
+            <div class="video-stage__flare"></div>
+          </div>
+
+          <div class="story-block story-block--right">
+            <p class="story-line" data-start="0.04" data-end="0.28">
+              Потом я понял:
+              дело не в сложности
+              и не в идеальности.
+            </p>
+            <p class="story-line" data-start="0.24" data-end="0.5">
+              Я не программист,
+              поэтому, может быть,
+              всё получилось немного просто.
+            </p>
+            <p class="story-line" data-start="0.46" data-end="0.72">
+              Но мне хотелось,
+              чтобы здесь чувствовалась
+              искренность.
+            </p>
+            <p class="story-line" data-start="0.68" data-end="0.96">
+              Потому что самое главное —
+              я очень ценю тебя.
+            </p>
+          </div>
+
+          <div class="story-kicker story-kicker--bottom">
+            <span>Надеюсь, тебе понравится</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="scene gallery-scene" id="memoryGallery">
+        <div class="scene-sticky gallery-stage">
+          <div class="gallery-copy">
+            <p class="eyebrow eyebrow--soft">Вот почему</p>
+            <h2 class="section-title">я хотел подарить тебе не просто вещь, а настроение.</h2>
+            <p class="gallery-caption" id="galleryCaption">
+              Тёплое, бережное и честное. Такое, которое хочется сохранить.
+            </p>
+          </div>
+
+          <div class="memory-carousel" id="memoryCarousel">
+            <article
+              class="memory-card is-active"
+              data-index="0"
+              data-caption="Иногда одного взгляда достаточно, чтобы понять, как много значит человек."
+            >
+              <div class="memory-card__frame">
+                <img src="instagram1.jpg" alt="Памятный кадр" loading="eager" />
+              </div>
+            </article>
+            <article
+              class="memory-card"
+              data-index="1"
+              data-caption="Иногда — одного света, одного кадра и одного тихого мгновения."
+            >
+              <div class="memory-card__frame">
+                <img src="instagram2.jpg" alt="Памятный кадр" loading="eager" />
+              </div>
+            </article>
+            <article
+              class="memory-card"
+              data-index="2"
+              data-caption="Именно из таких мгновений рождается желание сделать что-то по-настоящему трогательное."
+            >
+              <div class="memory-card__frame">
+                <img src="instagram3.JPG" alt="Памятный кадр" loading="eager" />
+              </div>
+            </article>
+            <article
+              class="memory-card"
+              data-index="3"
+              data-caption="Поэтому в итоге я выбрал подарок, который сможет сохранить это настроение."
+            >
+              <div class="memory-card__frame">
+                <img src="instagram4.JPG" alt="Памятный кадр" loading="eager" />
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="scene finale-scene" id="ticketReveal">
+        <div class="scene-sticky finale-stage">
+          <div class="finale-stage__backdrop"></div>
+          <div class="finale-stage__fog finale-stage__fog--left"></div>
+          <div class="finale-stage__fog finale-stage__fog--right"></div>
+          <div class="finale-stage__spotlight"></div>
+          <div class="ticket-glow"></div>
+
+          <div class="finale-copy">
+            <p class="eyebrow eyebrow--gold">И в итоге</p>
+            <h2 class="section-title section-title--finale">
+              я всё-таки решил подарить тебе постер.
+            </h2>
+            <p class="finale-lead">
+              Надеюсь, тебе понравится. И, пожалуйста, не забывай:
+              я очень ценю тебя. Спасибо за внимание.
+            </p>
+          </div>
+
+          <div class="ticket-composition">
+            <figure class="ticket ticket--left">
+              <img src="chipta1.png" alt="Билет" loading="eager" />
+            </figure>
+            <figure class="ticket ticket--right">
+              <img src="chipta2.png" alt="Билет" loading="eager" />
+            </figure>
+            <div class="ticket-intersection"></div>
+            <div class="ticket-sweep"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      window.__loaderFailSafe = window.setTimeout(() => {
+        const loader = document.getElementById("pageLoader");
+        if (!document.body.classList.contains("is-ready")) {
+          document.body.classList.add("is-static-mode", "is-ready");
+          loader?.classList.add("is-hidden");
+        }
+      }, 3200);
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/lenis@1.1.16/dist/lenis.min.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
