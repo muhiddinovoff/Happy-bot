@@ -79,7 +79,7 @@ main {
 }
 
 .video-scene {
-  min-height: 320svh;
+  min-height: 168svh;
 }
 
 .gallery-scene,
@@ -596,14 +596,16 @@ main {
   width: min(100%, 1200px);
   height: min(70vh, 740px);
   overflow: hidden;
+  touch-action: pan-y;
+  cursor: grab;
+  user-select: none;
 }
 
 .memory-card {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: min(30vw, 360px);
-  min-width: 220px;
+  width: clamp(240px, 68vw, 390px);
   border-radius: var(--radius-xl);
   will-change: transform, filter, opacity;
 }
@@ -629,6 +631,9 @@ main {
   object-fit: cover;
   border-radius: calc(var(--radius-xl) - 12px);
   backface-visibility: hidden;
+  -webkit-user-drag: none;
+  user-select: none;
+  pointer-events: none;
 }
 
 .finale-stage {
@@ -831,7 +836,7 @@ main {
 
 @media (max-width: 960px) {
   .video-scene {
-    min-height: 280svh;
+    min-height: 152svh;
   }
 
   .gallery-scene,
@@ -862,7 +867,7 @@ main {
   }
 
   .memory-card {
-    width: min(42vw, 290px);
+    width: clamp(240px, 52vw, 320px);
   }
 
   .ticket {
@@ -876,7 +881,7 @@ main {
   }
 
   .video-scene {
-    min-height: 260svh;
+    min-height: 140svh;
   }
 
   .gallery-scene,
@@ -958,7 +963,7 @@ main {
   }
 
   .memory-card {
-    width: min(68vw, 250px);
+    width: min(76vw, 312px);
   }
 
   .ticket-composition {

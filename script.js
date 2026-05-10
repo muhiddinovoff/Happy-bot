@@ -562,10 +562,17 @@ function initGallery() {
   const cardCount = cards.length;
   let activeIndex = 0;
   let autoplay;
+  let pointerStartX = 0;
+  let pointerDeltaX = 0;
+  let isDragging = false;
+  let resumeAutoplay;
 
   gsap.set(cards, { xPercent: -50, yPercent: -50 });
 
-  const getSpacing = () => (isMobile ? Math.min(window.innerWidth * 0.46, 168) : Math.min(window.innerWidth * 0.23, 280));
+  const getSlideStep = () => {
+    const baseWidth = carousel.clientWidth || window.innerWidth;
+    return isMobile ? Math.min(baseWidth * 0.96, 340) : Math.min(baseWidth * 0.84, 520);
+  };
 
   const normalizeOffset = (value) => {
     let offset = value;
@@ -596,18 +603,19 @@ function initGallery() {
   };
 
   const layoutCards = (instant = false) => {
-    const spacing = getSpacing();
+    const step = getSlideStep();
 
     cards.forEach((card, index) => {
       const offset = normalizeOffset(index - activeIndex);
       const distance = Math.abs(offset);
-      const x = offset * spacing;
-      const y = distance === 0 ? -10 : distance === 1 ? 8 : 24;
-      const scale = distance === 0 ? 1.04 : distance === 1 ? 0.82 : 0.62;
-      const opacity = distance === 0 ? 1 : distance === 1 ? 0.52 : 0.16;
-      const blur = distance === 0 ? 0 : distance === 1 ? 1.5 : 5.5;
-      const rotateY = offset * -24;
-      const rotateZ = offset * 2.4;
+      const dragOffset = isDragging ? pointerDeltaX : 0;
+      const x = offset * step + dragOffset;
+      const y = distance === 0 ? -8 : 0;
+      const scale = distance === 0 ? 1 : distance === 1 ? 0.94 : 0.88;
+      const opacity = distance === 0 ? 1 : distance === 1 ? 0.16 : 0;
+      const blur = distance === 0 ? 0 : distance === 1 ? 1.8 : 5.5;
+      const rotateY = distance === 0 ? 0 : offset * -4;
+      const rotateZ = 0;
       const zIndex = distance === 0 ? 30 : distance === 1 ? 20 : 10;
       const tweenConfig = {
         x,
@@ -636,11 +644,14 @@ function initGallery() {
       }
     });
 
-    updateCaption(activeIndex);
+    if (!isDragging && (activeIndex !== currentGalleryIndex || !galleryCaption.textContent.trim())) {
+      updateCaption(activeIndex);
+    }
   };
 
   const scheduleNext = () => {
     autoplay?.kill();
+    resumeAutoplay?.kill();
     autoplay = gsap.delayedCall(isMobile ? 2.5 : 2.9, () => {
       activeIndex = (activeIndex + 1) % cardCount;
       layoutCards();
@@ -648,6 +659,75 @@ function initGallery() {
     });
   };
 
+  const resumeLater = () => {
+    resumeAutoplay?.kill();
+    resumeAutoplay = gsap.delayedCall(2.4, scheduleNext);
+  };
+
+  const goNext = () => {
+    activeIndex = (activeIndex + 1) % cardCount;
+    layoutCards();
+  };
+
+  const goPrev = () => {
+    activeIndex = (activeIndex - 1 + cardCount) % cardCount;
+    layoutCards();
+  };
+
+  const onPointerDown = (event) => {
+    isDragging = true;
+    pointerStartX = event.clientX;
+    pointerDeltaX = 0;
+    autoplay?.kill();
+    resumeAutoplay?.kill();
+    carousel.style.cursor = "grabbing";
+    if (carousel.setPointerCapture) {
+      try {
+        carousel.setPointerCapture(event.pointerId);
+      } catch (error) {
+        // Ignore browsers that reject pointer capture for synthetic transitions.
+      }
+    }
+  };
+
+  const onPointerMove = (event) => {
+    if (!isDragging) {
+      return;
+    }
+
+    pointerDeltaX = event.clientX - pointerStartX;
+    layoutCards(true);
+  };
+
+  const onPointerUp = (event) => {
+    if (!isDragging) {
+      return;
+    }
+
+    const threshold = Math.min(84, window.innerWidth * 0.16);
+    isDragging = false;
+    carousel.style.cursor = "grab";
+    if (carousel.releasePointerCapture && event?.pointerId !== undefined) {
+      try {
+        carousel.releasePointerCapture(event.pointerId);
+      } catch (error) {
+        // Ignore browsers that already released the pointer.
+      }
+    }
+
+    if (pointerDeltaX <= -threshold) {
+      goNext();
+    } else if (pointerDeltaX >= threshold) {
+      goPrev();
+    } else {
+      layoutCards();
+    }
+
+    pointerDeltaX = 0;
+    resumeLater();
+  };
+
+  currentGalleryIndex = -1;
   layoutCards(true);
 
   ScrollTrigger.create({
@@ -672,6 +752,12 @@ function initGallery() {
   window.addEventListener("resize", () => {
     layoutCards(true);
   });
+
+  carousel.addEventListener("pointerdown", onPointerDown);
+  carousel.addEventListener("dragstart", (event) => event.preventDefault());
+  window.addEventListener("pointermove", onPointerMove);
+  window.addEventListener("pointerup", onPointerUp);
+  window.addEventListener("pointercancel", onPointerUp);
 }
 
 function initFinale() {
