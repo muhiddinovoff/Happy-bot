@@ -193,7 +193,7 @@ function enableAudio() {
       });
 
       audioBadge.classList.add("is-awake");
-      audioBadge.querySelector(".audio-badge__text").textContent = "Музыка уже здесь";
+      audioBadge.querySelector(".audio-badge__text").textContent = "Музыка уже рядом";
       gsap.to(audioBadge, {
         opacity: 0.45,
         duration: 2.8,
@@ -238,17 +238,17 @@ function initVideoScenes() {
 
     gsap.set(lines, {
       opacity: 0,
-      y: 42,
-      scale: 0.965,
-      filter: "blur(14px)",
+      y: 34,
+      scale: 0.978,
+      filter: "blur(12px)",
     });
 
     const textTimeline = gsap.timeline({
       scrollTrigger: {
         trigger: section,
-        start: isMobile ? "top 88%" : "top 82%",
-        end: isMobile ? "bottom 22%" : "bottom 18%",
-        scrub: 0.55,
+        start: isMobile ? "top 92%" : "top 88%",
+        end: isMobile ? "bottom 14%" : "bottom 12%",
+        scrub: 0.42,
       },
     });
 
@@ -256,8 +256,8 @@ function initVideoScenes() {
       const start = Number(line.dataset.start) * 100;
       const end = Number(line.dataset.end) * 100;
       const span = end - start;
-      const fadeUnits = Math.min(9, span * 0.26);
-      const holdUnits = Math.max(4, span - fadeUnits * 2);
+      const fadeUnits = Math.min(10, span * 0.24);
+      const holdUnits = Math.max(6, span - fadeUnits * 2);
 
       textTimeline
         .to(
@@ -288,9 +288,9 @@ function initVideoScenes() {
           line,
           {
             opacity: 0,
-            y: -18,
-            scale: 0.985,
-            filter: "blur(12px)",
+            y: -14,
+            scale: 0.988,
+            filter: "blur(10px)",
             ease: "none",
             duration: fadeUnits,
           },
@@ -305,7 +305,7 @@ function initVideoScenes() {
       onUpdate: (self) => {
         const velocity = Math.min(Math.abs(self.getVelocity()) / 2600, 1);
         state.targetTime = self.progress * state.duration;
-        state.velocityBoost = gsap.utils.interpolate(state.velocityBoost, 0.08 + velocity * 0.18, 0.24);
+        state.velocityBoost = gsap.utils.interpolate(state.velocityBoost, 0.075 + velocity * 0.14, 0.22);
       },
     });
 
@@ -315,7 +315,7 @@ function initVideoScenes() {
   gsap.ticker.add(() => {
     scenes.forEach(({ video, state }) => {
       state.currentTime += (state.targetTime - state.currentTime) * state.velocityBoost;
-      state.velocityBoost += (0.08 - state.velocityBoost) * 0.08;
+      state.velocityBoost += (0.075 - state.velocityBoost) * 0.08;
 
       if (Math.abs(video.currentTime - state.currentTime) > 0.025) {
         video.currentTime = state.currentTime;
@@ -324,7 +324,7 @@ function initVideoScenes() {
   });
 
   gsap.to("#cinemaOne", {
-    scale: 1.02,
+    scale: 1.03,
     ease: "none",
     scrollTrigger: {
       trigger: "#videoSceneOne",
@@ -335,7 +335,7 @@ function initVideoScenes() {
   });
 
   gsap.to("#cinemaTwo", {
-    scale: 1.08,
+    scale: 1.06,
     ease: "none",
     scrollTrigger: {
       trigger: "#videoSceneTwo",
@@ -351,8 +351,8 @@ function initSceneTransition() {
   const mediaTwo = document.querySelector("#videoSceneTwo .video-stage__media");
 
   gsap.set(mediaTwo, {
-    opacity: 0.2,
-    filter: "blur(14px)",
+    opacity: 0.38,
+    filter: "blur(10px)",
   });
 
   gsap.set(transitionLayer, { opacity: 0 });
@@ -366,12 +366,12 @@ function initSceneTransition() {
     },
     {
       opacity: 0.28,
-      filter: "blur(14px)",
+      filter: "blur(10px)",
       ease: "none",
       scrollTrigger: {
         trigger: "#videoSceneOne",
-        start: "bottom-=28% bottom",
-        end: "bottom top",
+        start: "bottom 82%",
+        end: "bottom 34%",
         scrub: true,
       },
     },
@@ -381,12 +381,12 @@ function initSceneTransition() {
     transitionLayer,
     { opacity: 0 },
     {
-      opacity: 0.72,
+      opacity: 0.48,
       ease: "none",
       scrollTrigger: {
         trigger: "#videoSceneOne",
-        start: "bottom-=28% bottom",
-        end: "bottom top",
+        start: "bottom 82%",
+        end: "bottom 34%",
         scrub: true,
       },
     },
@@ -396,13 +396,13 @@ function initSceneTransition() {
     ".scene-transition__core",
     { opacity: 0, scale: 0.82 },
     {
-      opacity: 0.42,
-      scale: 1.04,
+      opacity: 0.24,
+      scale: 1.02,
       ease: "none",
       scrollTrigger: {
         trigger: "#videoSceneOne",
-        start: "bottom-=28% bottom",
-        end: "bottom top",
+        start: "bottom 82%",
+        end: "bottom 34%",
         scrub: true,
       },
     },
@@ -411,8 +411,8 @@ function initSceneTransition() {
   gsap.fromTo(
     mediaTwo,
     {
-      opacity: 0.2,
-      filter: "blur(14px)",
+      opacity: 0.38,
+      filter: "blur(10px)",
     },
     {
       opacity: 1,
@@ -420,8 +420,8 @@ function initSceneTransition() {
       ease: "none",
       scrollTrigger: {
         trigger: "#videoSceneTwo",
-        start: "top bottom",
-        end: "top+=32% top",
+        start: "top 92%",
+        end: "top 48%",
         scrub: true,
       },
     },
@@ -429,14 +429,14 @@ function initSceneTransition() {
 
   gsap.fromTo(
     transitionLayer,
-    { opacity: 0.72 },
+    { opacity: 0.48 },
     {
       opacity: 0,
       ease: "none",
       scrollTrigger: {
         trigger: "#videoSceneTwo",
-        start: "top bottom",
-        end: "top+=32% top",
+        start: "top 92%",
+        end: "top 48%",
         scrub: true,
       },
     },
@@ -444,15 +444,15 @@ function initSceneTransition() {
 
   gsap.fromTo(
     ".scene-transition__core",
-    { opacity: 0.42, scale: 1.04 },
+    { opacity: 0.24, scale: 1.02 },
     {
       opacity: 0,
       scale: 0.88,
       ease: "none",
       scrollTrigger: {
         trigger: "#videoSceneTwo",
-        start: "top bottom",
-        end: "top+=32% top",
+        start: "top 92%",
+        end: "top 48%",
         scrub: true,
       },
     },
@@ -558,6 +558,7 @@ function setGalleryTheme(theme) {
 function initGallery() {
   const carousel = document.getElementById("memoryCarousel");
   const cards = [...carousel.querySelectorAll(".memory-card")];
+  const dots = [...document.querySelectorAll(".memory-dot")];
   const themes = cards.map((card) => extractDominantColor(card.querySelector("img")));
   const cardCount = cards.length;
   let activeIndex = 0;
@@ -593,6 +594,11 @@ function initGallery() {
     currentGalleryIndex = index;
     const card = cards[index];
     cards.forEach((item) => item.classList.toggle("is-active", item === card));
+    dots.forEach((dot, dotIndex) => {
+      const isActive = dotIndex === index;
+      dot.classList.toggle("is-active", isActive);
+      dot.setAttribute("aria-pressed", String(isActive));
+    });
     galleryCaption.textContent = card.dataset.caption;
     gsap.fromTo(
       galleryCaption,
@@ -652,7 +658,7 @@ function initGallery() {
   const scheduleNext = () => {
     autoplay?.kill();
     resumeAutoplay?.kill();
-    autoplay = gsap.delayedCall(isMobile ? 2.5 : 2.9, () => {
+    autoplay = gsap.delayedCall(isMobile ? 2.9 : 3.3, () => {
       activeIndex = (activeIndex + 1) % cardCount;
       layoutCards();
       scheduleNext();
@@ -661,7 +667,7 @@ function initGallery() {
 
   const resumeLater = () => {
     resumeAutoplay?.kill();
-    resumeAutoplay = gsap.delayedCall(2.4, scheduleNext);
+    resumeAutoplay = gsap.delayedCall(2.6, scheduleNext);
   };
 
   const goNext = () => {
@@ -751,6 +757,16 @@ function initGallery() {
 
   window.addEventListener("resize", () => {
     layoutCards(true);
+  });
+
+  dots.forEach((dot) => {
+    dot.addEventListener("click", () => {
+      activeIndex = Number(dot.dataset.index) || 0;
+      autoplay?.kill();
+      resumeAutoplay?.kill();
+      layoutCards();
+      resumeLater();
+    });
   });
 
   carousel.addEventListener("pointerdown", onPointerDown);
